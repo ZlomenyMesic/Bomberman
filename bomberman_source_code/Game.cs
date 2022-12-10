@@ -69,7 +69,7 @@ namespace Bomberman
 
             base.Initialize();
 
-            BlockUtilities.LoadBoardLayout(level: 0);
+            BlockUtilities.LoadBoardLayout(level: 4);
 
             Start();
         }
@@ -180,7 +180,7 @@ namespace Bomberman
         {
             // Load some important stuff
 
-            LevelManager.LoadNewStartPositions(0);
+            LevelManager.LoadNewStartPositions(4);
             Treasure.GenerateTreasure();
             ExitPortal.GenerateExitPortal();
             BlockUtilities.UpdateAllTextures();

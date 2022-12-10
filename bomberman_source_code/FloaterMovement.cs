@@ -39,6 +39,11 @@ namespace Bomberman
             if (new Random().Next(0, 200) == 1)
                 ChangeDirection(ref floater, floater.direction);
         }
+
+        public static void RandomTurnAtIntersection(ref GameObject floater)
+        {
+            // TODO
+        }
     }
     #endregion
 }

@@ -17,6 +17,7 @@ namespace Bomberman
     internal static class LevelManager
     {
         public static int level = 0;
+        public static bool preventMultipleRestarts = true;
         public static List<int[]> levels = new List<int[]>
         {
             new int[] { 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
@@ -51,10 +52,30 @@ namespace Bomberman
  2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 2,
  2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2,
  2, 1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1, 2,
+ 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2 },
+            new int[] { 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2,
+ 2, 1, 2, 1, 2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 2,
+ 2, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2,
+ 2, 1, 2, 1, 2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 2,
+ 2, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2,
+ 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+ 2, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2,
+ 2, 1, 2, 1, 2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 2,
+ 2, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2,
+ 2, 1, 2, 1, 2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 2,
+ 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2 },
+            new int[] { 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2,
+ 2, 1, 0, 1, 2, 1, 0, 1, 0, 1, 2, 1, 0, 1, 2,
+ 2, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 2,
+ 2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 2,
+ 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2,
+ 2, 1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1, 2,
+ 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2,
+ 2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 2,
+ 2, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 2,
+ 2, 1, 0, 1, 2, 1, 0, 1, 0, 1, 2, 1, 0, 1, 2,
  2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2 }
-
         };
-        public static bool preventMultipleRestarts = true;
 
         /// <summary>
         /// Actions after a game object died
@@ -92,6 +113,18 @@ namespace Bomberman
                 Game.eric = new(new Vector2(600, 530), true);
                 Game.floater1 = new(new Vector2(350, 30), false);
                 Game.floater2 = new(new Vector2(350, 430), false);
+            }
+            else if (newLevel == 3)
+            {
+                Game.eric = new(new Vector2(100, 530), true);
+                Game.floater1 = new(new Vector2(350, 30), false);
+                Game.floater2 = new(new Vector2(350, 130), false);
+            }
+            else if (newLevel == 4)
+            {
+                Game.eric = new(new Vector2(100, 530), true);
+                Game.floater1 = new(new Vector2(100, 280), false);
+                Game.floater2 = new(new Vector2(600, 280), false);
             }
         }
     }

@@ -73,6 +73,17 @@ namespace Bomberman
             int num = Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)];
             return (num == 0) || (num == 3) || (num == 4) || (num == 5) || (num == 6);
         }
+
+        /// <summary>
+        /// Check if the block at the given coordinates is an intersection
+        /// </summary>
+        /// <param name="vector">XY board-relative coordinates</param>
+        /// <returns>true if the block is an intersection, otherwise false</returns>
+        public static bool IsIntersection(Vector2 vector)
+        {
+            return IsFree(new Vector2(vector.X + 1, vector.Y)) && IsFree(new Vector2(vector.X - 1, vector.Y))
+                && IsFree(new Vector2(vector.X, vector.Y + 1)) && IsFree(new Vector2(vector.X, vector.Y - 1));
+        }
     }
     #endregion
 }
