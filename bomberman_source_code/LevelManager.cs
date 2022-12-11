@@ -84,7 +84,7 @@ namespace Bomberman
         /// <param name="playerDied">true if the dead game object is a player</param>
         public static void Death(bool playerDied)
         {
-            Score.Add(playerDied ? 0 : 250);
+            Score.Set(playerDied ? 0 : Score.score + 250);
 
             if (playerDied ) 
                 Game.Restart(!playerDied);

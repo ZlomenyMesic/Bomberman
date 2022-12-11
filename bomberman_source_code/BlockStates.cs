@@ -81,8 +81,11 @@ namespace Bomberman
         /// <returns>true if the block is an intersection, otherwise false</returns>
         public static bool IsIntersection(Vector2 vector)
         {
-            return IsFree(new Vector2(vector.X + 1, vector.Y)) && IsFree(new Vector2(vector.X - 1, vector.Y))
-                && IsFree(new Vector2(vector.X, vector.Y + 1)) && IsFree(new Vector2(vector.X, vector.Y - 1));
+            return (IsOutOfRange(new Vector2(vector.X + 1, vector.Y)) || (IsFree(new Vector2(vector.X + 1, vector.Y))))
+                && (IsOutOfRange(new Vector2(vector.X - 1, vector.Y)) || (IsFree(new Vector2(vector.X - 1, vector.Y))))
+                && (IsOutOfRange(new Vector2(vector.X, vector.Y + 1)) || (IsFree(new Vector2(vector.X, vector.Y + 1))))
+                && (IsOutOfRange(new Vector2(vector.X, vector.Y - 1)) || (IsFree(new Vector2(vector.X, vector.Y - 1))))
+                && !IsOutOfRange(vector) && IsFree(vector);
         }
     }
     #endregion

@@ -14,6 +14,14 @@ namespace Bomberman
     #region Game Object Movement
     internal static class MoveGameObject
     {
+        public static Dictionary<Direction, Direction> oppositeDirection = new Dictionary<Direction, Direction> 
+        {
+            { Direction.Up, Direction.Down },
+            { Direction.Down, Direction.Up },
+            { Direction.Left, Direction.Right },
+            { Direction.Right, Direction.Left }
+        };
+
         /// <summary>
         /// Move a game object (player or floater) 1 pixel in a specified direction
         /// </summary>
@@ -44,11 +52,17 @@ namespace Bomberman
             }
             else if (!gameObject.isPlayer)
             {
-                // If the game object is a floater and couldn't move in that direction, change it's direction
+                // If a floater couldn't move in that direction, change it's direction
                 // Needed to change the floater's direction when it hits a wall
 
                 FloaterMovement.ChangeDirection(ref gameObject, direction);
             }
+
+            // If the floater hits a bomb, change it's direction to the opposite
+
+            if (!BlockStates.IsOutOfRange(newCoordsTop) && BlockStates.IsBomb(newCoordsTop)
+                || !BlockStates.IsOutOfRange(newCoordsBottom) && BlockStates.IsBomb(newCoordsBottom) && !gameObject.isPlayer)
+                gameObject.direction = oppositeDirection[gameObject.direction];
         }
 
         /// <summary>

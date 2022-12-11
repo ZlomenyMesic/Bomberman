@@ -69,7 +69,7 @@ namespace Bomberman
 
             base.Initialize();
 
-            BlockUtilities.LoadBoardLayout(level: 4);
+            BlockUtilities.LoadBoardLayout(level: 0);
 
             Start();
         }
@@ -122,6 +122,9 @@ namespace Bomberman
 
             FloaterCollision.CheckForCollision(floater1);
             FloaterCollision.CheckForCollision(floater2);
+
+            FloaterMovement.RandomTurnAtIntersection(ref floater1);
+            FloaterMovement.RandomTurnAtIntersection(ref floater2);
 
             // Bomb updates
 
@@ -180,7 +183,7 @@ namespace Bomberman
         {
             // Load some important stuff
 
-            LevelManager.LoadNewStartPositions(4);
+            LevelManager.LoadNewStartPositions(0);
             Treasure.GenerateTreasure();
             ExitPortal.GenerateExitPortal();
             BlockUtilities.UpdateAllTextures();
