@@ -37,7 +37,7 @@ namespace Bomberman
         }
 
         /// <summary>
-        /// Calculate the position of the scoreboard based on the score amount
+        /// Calculate the position of the scoreboard based on the score amount.
         /// Needed to keep the scoreboard centered
         /// </summary>
         /// <returns>XY window-relative coordinates</returns>

@@ -67,7 +67,7 @@ namespace Bomberman
 
         /// <summary>
         /// Express a direction with coordinates
-        /// Calculate additional pixels to center a game object
+        /// and calculate additional pixels to center a game object
         /// </summary>
         /// <param name="direction">The direction in which the game object is moving</param>
         /// <param name="move_X">The direction expressed in X coordinates</param>

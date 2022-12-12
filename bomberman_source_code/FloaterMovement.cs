@@ -16,7 +16,7 @@ namespace Bomberman
         private static int preventMultipleTurns = 0;
 
         /// <summary>
-        /// Choose a new direction of the floater
+        /// Choose a new direction of the floater.
         /// Used when a floater hits a wall
         /// </summary>
         /// <param name="floater">Game object reference</param>
@@ -33,7 +33,7 @@ namespace Bomberman
         }
 
         /// <summary>
-        /// Choose a new direction for the floater
+        /// Choose a new direction for the floater.
         /// Only turn sideways (no turning in the opposite direction)
         /// </summary>
         /// <param name="floater">Game object reference</param>

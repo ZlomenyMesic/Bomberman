@@ -19,7 +19,7 @@ namespace Bomberman
         public static bool exitPortalLoadCheck = false;
 
         /// <summary>
-        /// List all weak walls, then choose one and hide the exit portal inside
+        /// List all weak walls, then choose one and hide the exit portal inside.
         /// Also prevents hiding the exit portal in the same block as the treasure
         /// </summary>
         public static void GenerateExitPortal()

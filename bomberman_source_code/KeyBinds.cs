@@ -14,15 +14,27 @@ namespace Bomberman
     public static class KeyBinds
     {
         /// <summary>
-        /// Move the player if the keys WASD are pressed
+        /// Move the player if the keys WASD are pressed.
+        /// Change the player's texture when moving left or right
         /// </summary>
         /// <param name="keyboardState">Actual keyboard state</param>
         public static void KeyboardMovePlayer(KeyboardState keyboardState)
         {
-            if (keyboardState.IsKeyDown(Keys.W)) { MoveGameObject.Move(ref Game.eric, Direction.Up); }
-            if (keyboardState.IsKeyDown(Keys.A)) { MoveGameObject.Move(ref Game.eric, Direction.Left); }
-            if (keyboardState.IsKeyDown(Keys.S)) { MoveGameObject.Move(ref Game.eric, Direction.Down); }
-            if (keyboardState.IsKeyDown(Keys.D)) { MoveGameObject.Move(ref Game.eric, Direction.Right); }
+            if (keyboardState.IsKeyDown(Keys.W))
+                MoveGameObject.Move(ref Game.eric, Direction.Up);
+
+            if (keyboardState.IsKeyDown(Keys.A)) 
+            { 
+                MoveGameObject.Move(ref Game.eric, Direction.Left);
+                EricMovement.ChangeTexture(Game.ericLeftTexture);
+            }
+            if (keyboardState.IsKeyDown(Keys.S))
+                MoveGameObject.Move(ref Game.eric, Direction.Down);
+            if (keyboardState.IsKeyDown(Keys.D)) 
+            { 
+                MoveGameObject.Move(ref Game.eric, Direction.Right);
+                EricMovement.ChangeTexture(Game.ericRightTexture);
+            }
 
         }
 

@@ -18,6 +18,7 @@ namespace Bomberman
         public Texture2D texture;
         public Direction direction = Direction.Down;
         public bool isPlayer;
+        private int directionChangeCountdown;
 
         /// <summary>
         /// Create a new game object (player or floater)

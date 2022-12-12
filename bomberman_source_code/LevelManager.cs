@@ -78,7 +78,7 @@ namespace Bomberman
         };
 
         /// <summary>
-        /// Actions after a game object died
+        /// Actions after a game object died.
         /// Add score if a floater died, restart the game if the player died
         /// </summary>
         /// <param name="playerDied">true if the dead game object is a player</param>

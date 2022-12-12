@@ -32,12 +32,15 @@ namespace Bomberman
 
         public static Texture2D textureWall;
         public static Texture2D textureWeakWall;
-        public static Texture2D textureTreasure;
-        public static Texture2D textureExitPortal;
-        public static Texture2D ericTexture;
-        public static Texture2D floaterTexture;
         public static Texture2D bombTexture;
         public static Texture2D smokeTexture;
+        public static Texture2D textureTreasure;
+        public static Texture2D textureExitPortal;
+
+        public static Texture2D floaterTexture;
+        public static Texture2D ericTexture;
+        public static Texture2D ericLeftTexture;
+        public static Texture2D ericRightTexture;
 
         public SpriteFont mainFont;
 
@@ -85,8 +88,10 @@ namespace Bomberman
             textureTreasure = Content.Load<Texture2D>("Treasure");
             textureExitPortal = Content.Load<Texture2D>("Exit");
 
-            ericTexture = Content.Load<Texture2D>("Eric");
             floaterTexture = Content.Load<Texture2D>("Floater");
+            ericTexture = Content.Load<Texture2D>("Eric");
+            ericLeftTexture = Content.Load<Texture2D>("EricLeft");
+            ericRightTexture = Content.Load<Texture2D>("EricRight");
 
             bombTexture = Content.Load<Texture2D>("Bomb");
             smokeTexture = Content.Load<Texture2D>("Explosion");
@@ -111,6 +116,10 @@ namespace Bomberman
 
             KeyBinds.KeyboardMovePlayer(keyboardState);
             KeyBinds.KeyboardPlaceBomb(keyboardState);
+
+            // Eric position updates
+
+            EricMovement.TextureUpdates();
 
             // Floater updates
 
