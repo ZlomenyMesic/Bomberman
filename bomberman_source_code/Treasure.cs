@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using Microsoft.Xna.Framework.Media;
 
 namespace Bomberman
 {
@@ -47,6 +48,7 @@ namespace Bomberman
             if (!treasureFound)
             {
                 treasureFound = true;
+                Game.treasureSound.Play();
                 Game.boardLayout[treasurePosition] = 0;
                 Game.gameBoard[treasurePosition].ChangeType(BlockType.Air);
                 Score.Add(500);

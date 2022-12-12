@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using SharpDX.Direct2D1;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Bomberman
 {
@@ -157,8 +159,11 @@ namespace Bomberman
                 if (bombCountdown != -1) 
                     bombCountdown--;
 
-                if (bombCountdown == 0) 
+                if (bombCountdown == 0)
+                {
+                    Game.bombExplosion.Play();
                     Explosion();
+                }
             }
         }
 

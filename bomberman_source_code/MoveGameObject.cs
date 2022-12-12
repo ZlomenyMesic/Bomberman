@@ -63,6 +63,11 @@ namespace Bomberman
             if (!BlockStates.IsOutOfRange(newCoordsTop) && BlockStates.IsBomb(newCoordsTop)
                 || !BlockStates.IsOutOfRange(newCoordsBottom) && BlockStates.IsBomb(newCoordsBottom) && !gameObject.isPlayer)
                 gameObject.direction = oppositeDirection[gameObject.direction];
+
+            // Walking sound effect
+
+            if (gameObject.isPlayer)
+                WalkingSFX.PlaySound();
         }
 
         /// <summary>

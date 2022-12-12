@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Net.Mime;
 using System.Reflection.Metadata.Ecma335;
@@ -50,6 +52,10 @@ namespace Bomberman
         public static GameObject floater1;
         public static GameObject floater2;
 
+        public static SoundEffect bombExplosion;
+        public static SoundEffect ericWalking;
+        public static SoundEffect treasureSound;
+
         public static int FramesPerSecond = 100;
 
         public Game()
@@ -95,6 +101,10 @@ namespace Bomberman
 
             bombTexture = Content.Load<Texture2D>("Bomb");
             smokeTexture = Content.Load<Texture2D>("Explosion");
+
+            bombExplosion = Content.Load<SoundEffect>("bombSound");
+            ericWalking = Content.Load<SoundEffect>("walking");
+            treasureSound = Content.Load<SoundEffect>("treasureSound");
 
             mainFont = Content.Load<SpriteFont>("MainFont");
         }
@@ -150,6 +160,10 @@ namespace Bomberman
 
             StructureUpdates.UpdateTextures();
             StructureUpdates.UpdateBoardLayout();
+
+            // SFX updates
+
+            WalkingSFX.SoundUpdates();
 
             base.Update(gameTime);
         }
