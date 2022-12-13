@@ -63,7 +63,7 @@ namespace Bomberman
         /// <param name="floater">Game object reference</param>
         public static void RandomTurnAtIntersection(ref GameObject floater)
         {
-            if (BlockStates.IsIntersection(VectorMath.DivideVector(new Vector2(floater.position.X, floater.position.Y + 1))) && (preventMultipleTurns < 0))
+            if (BlockStates.IsIntersection(VectorMath.DivideVector(new Vector2(floater.position.X, floater.position.Y + 1)), Game.boardLayout) && (preventMultipleTurns < 0))
             {
                 TurnSideways(ref floater, floater.direction);
                 preventMultipleTurns = 200;

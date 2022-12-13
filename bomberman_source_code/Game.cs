@@ -54,7 +54,7 @@ namespace Bomberman
 
         public static SoundEffect bombExplosion;
         public static SoundEffect ericWalking;
-        public static SoundEffect treasureSound;
+        public static SoundEffect upgradeSound;
 
         public static int FramesPerSecond = 100;
 
@@ -78,7 +78,7 @@ namespace Bomberman
 
             base.Initialize();
 
-            BlockUtilities.LoadBoardLayout(level: 0);
+            BlockUtilities.LoadBoardLayout();
 
             Start();
         }
@@ -104,7 +104,7 @@ namespace Bomberman
 
             bombExplosion = Content.Load<SoundEffect>("bombSound");
             ericWalking = Content.Load<SoundEffect>("walking");
-            treasureSound = Content.Load<SoundEffect>("treasureSound");
+            upgradeSound = Content.Load<SoundEffect>("treasureSound");
 
             mainFont = Content.Load<SpriteFont>("MainFont");
         }
@@ -193,6 +193,7 @@ namespace Bomberman
             // Draw the scoreboard
 
             _spriteBatch.DrawString(mainFont, Score.scoreboard, Score.CalculateScoreBoardPosition(), Color.White);
+            _spriteBatch.DrawString(mainFont, LevelManager.levelText, new Vector2(5, 5), Color.White);
 
             _spriteBatch.End();
 
@@ -206,7 +207,7 @@ namespace Bomberman
         {
             // Load some important stuff
 
-            LevelManager.LoadNewStartPositions(0);
+            LevelManager.LoadNewStartPositions();
             Treasure.GenerateTreasure();
             ExitPortal.GenerateExitPortal();
             BlockUtilities.UpdateAllTextures();
@@ -222,7 +223,8 @@ namespace Bomberman
             {
                 LevelManager.preventMultipleRestarts = false;
 
-                LevelManager.level = newLevel ? ++LevelManager.level : 0;
+                LevelManager.level = newLevel ? LevelManager.level : 1;
+                LevelManager.levelText = $"CURRENT STAGE: {LevelManager.level}";
 
                 Bomb.ResetCountdowns();
 
@@ -231,14 +233,14 @@ namespace Bomberman
                 Treasure.treasureFound = true;
                 ExitPortal.exitPortalFound = true;
 
-                // Load the new starting positions for the player and the floaters
-
-                LevelManager.LoadNewStartPositions(newLevel ? LevelManager.level : 0);
-
                 // Update the board and the textures
 
-                BlockUtilities.LoadBoardLayout(newLevel ? LevelManager.level : 0);
+                BlockUtilities.LoadBoardLayout();
                 BlockUtilities.UpdateAllTextures();
+
+                // Load the new starting positions for the player and the floaters
+
+                LevelManager.LoadNewStartPositions();
 
                 // Generate a new treasure and a new exit portal
 

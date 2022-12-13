@@ -54,13 +54,16 @@ namespace Bomberman
         }
 
         /// <summary>
-        /// Set the boardLayout to the given level
+        /// Generate a new boardLayout
         /// </summary>
         /// <param name="level">Next level</param>
-        public static void LoadBoardLayout(int level)
+        public static void LoadBoardLayout()
         {
-            for (int index = 0; index < 165; index++)
-                Game.boardLayout[index] = LevelManager.levels[level][index];
+            Game.boardLayout = LevelGeneration.GenerateNewBoardLayout();
+
+            // If the new board layout is empty, make another one
+            while (!Game.boardLayout.Contains(1))
+                Game.boardLayout = LevelGeneration.GenerateNewBoardLayout();
         }
     }
 

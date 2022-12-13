@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using Microsoft.Xna.Framework.Media;
 
 namespace Bomberman
 {
@@ -44,7 +45,9 @@ namespace Bomberman
             if (!exitPortalFound)
             {
                 exitPortalFound = true;
+                Game.upgradeSound.Play();
                 Game.gameBoard[exitPortalPosition].ChangeType(BlockType.Air);
+                LevelManager.levelText = $"CURRENT STAGE: {++LevelManager.level}";
                 Game.Restart(newLevel: true);
             }
         }

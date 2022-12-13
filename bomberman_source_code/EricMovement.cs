@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Eric Movement
     internal class EricMovement
     {
         public static int directionChangeCountdown;
@@ -34,4 +35,5 @@ namespace Bomberman
                 Game.eric.texture = Game.ericTexture;
         }
     }
+    #endregion
 }

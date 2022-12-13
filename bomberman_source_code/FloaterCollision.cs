@@ -21,7 +21,7 @@ namespace Bomberman
         {
             // Calculate the distance between the player and the floater
 
-            int distance = (int)Vector2.Distance(new Vector2(Game.eric.position.X, Game.eric.position.Y), new Vector2(floater.position.X, floater.position.Y));
+            int distance = (int)Vector2.Distance(Game.eric.position, floater.position);
 
             if (distance < 30)
                 Game.eric.Kill();

@@ -48,7 +48,7 @@ namespace Bomberman
             if (!treasureFound)
             {
                 treasureFound = true;
-                Game.treasureSound.Play();
+                Game.upgradeSound.Play();
                 Game.boardLayout[treasurePosition] = 0;
                 Game.gameBoard[treasurePosition].ChangeType(BlockType.Air);
                 Score.Add(500);

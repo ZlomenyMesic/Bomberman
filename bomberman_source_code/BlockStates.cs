@@ -17,10 +17,11 @@ namespace Bomberman
         /// Check if the block at the given coordinates is empty
         /// </summary>
         /// <param name="vector">XY board-relative coordinates</param>
+        /// <param name="board">board layout</param>
         /// <returns>true if the block is empty, otherwise false</returns>
-        public static bool IsFree(Vector2 vector)
+        public static bool IsFree(Vector2 vector, int[] board)
         {
-            return Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)] == 0 ;
+            return board[VectorMath.CalculateBoardRelativePosition(vector)] == 0 ;
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Bomberman
         /// <returns>true if the block can explode, otherwise false</returns>
         public static bool CanExplode(Vector2 vector)
         {
-            return !IsOutOfRange(vector) && (IsFree(vector) || IsDestructable(vector));
+            return !IsOutOfRange(vector) && (IsFree(vector, Game.boardLayout) || IsDestructable(vector));
         }
 
         /// <summary>
@@ -78,14 +79,15 @@ namespace Bomberman
         /// Check if the block at the given coordinates is an intersection
         /// </summary>
         /// <param name="vector">XY board-relative coordinates</param>
+        /// <param name="board">board layout</param>
         /// <returns>true if the block is an intersection, otherwise false</returns>
-        public static bool IsIntersection(Vector2 vector)
+        public static bool IsIntersection(Vector2 vector, int[] board)
         {
-            return (IsOutOfRange(new Vector2(vector.X + 1, vector.Y)) || (IsFree(new Vector2(vector.X + 1, vector.Y))))
-                && (IsOutOfRange(new Vector2(vector.X - 1, vector.Y)) || (IsFree(new Vector2(vector.X - 1, vector.Y))))
-                && (IsOutOfRange(new Vector2(vector.X, vector.Y + 1)) || (IsFree(new Vector2(vector.X, vector.Y + 1))))
-                && (IsOutOfRange(new Vector2(vector.X, vector.Y - 1)) || (IsFree(new Vector2(vector.X, vector.Y - 1))))
-                && !IsOutOfRange(vector) && IsFree(vector);
+            return (IsOutOfRange(new Vector2(vector.X + 1, vector.Y)) || IsFree(new Vector2(vector.X + 1, vector.Y), board))
+                && (IsOutOfRange(new Vector2(vector.X - 1, vector.Y)) || IsFree(new Vector2(vector.X - 1, vector.Y), board))
+                && (IsOutOfRange(new Vector2(vector.X, vector.Y + 1)) || IsFree(new Vector2(vector.X, vector.Y + 1), board))
+                && (IsOutOfRange(new Vector2(vector.X, vector.Y - 1)) || IsFree(new Vector2(vector.X, vector.Y - 1), board))
+                && !IsOutOfRange(vector) && IsFree(vector, board);
         }
     }
     #endregion

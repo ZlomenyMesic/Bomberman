@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Walking Sound Effects
     internal class WalkingSFX
     {
         public static int isPlaying = 0;
@@ -28,4 +29,5 @@ namespace Bomberman
         /// </summary>
         public static void SoundUpdates() => isPlaying--;
     }
+    #endregion
 }

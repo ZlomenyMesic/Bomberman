@@ -30,7 +30,7 @@ namespace Bomberman
 
             // Check if it's possible to place a bomb at that location
 
-            if (!BlockStates.IsOutOfRange(ericCoords) && BlockStates.IsFree(ericCoords) && !BlockStates.IsBomb(ericCoords) && (bombCountdown == -1) 
+            if (!BlockStates.IsOutOfRange(ericCoords) && BlockStates.IsFree(ericCoords, Game.boardLayout) && !BlockStates.IsBomb(ericCoords) && (bombCountdown == -1) 
                 && (!Game.boardLayout.Contains(3)) && (!Game.boardLayout.Contains(4)))
             {
                 // Set the bomb countdown to 200 and change the block to a bomb
