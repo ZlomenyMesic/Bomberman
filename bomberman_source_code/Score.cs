@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography.Xml;
 
 namespace Bomberman
 {
@@ -23,6 +24,8 @@ namespace Bomberman
         public static void Add(int amount)
         {
             score += amount;
+            if (score < 0)
+                score = 0;
             scoreboard = $"SCORE: {score}";
         }
 
@@ -49,10 +52,16 @@ namespace Bomberman
 
             // Calculate the position
 
-            if (scoreLength == 1) { return new Vector2(330, 5); }
-            else if (scoreLength == 3) { return new Vector2(320, 5); }
-            else if (scoreLength == 4) { return new Vector2(315, 5); }
-            else return new Vector2(0, 0);
+            switch (scoreLength)
+            {
+                case 1: return new Vector2(330, 5);
+                case 2: return new Vector2(325, 5);
+                case 3: return new Vector2(320, 5);
+                case 4: return new Vector2(315, 5);
+                case 5: return new Vector2(310, 5);
+                case 6: return new Vector2(305, 5);
+                default: return new Vector2(0, 0);
+            }
         }
     }
     #endregion

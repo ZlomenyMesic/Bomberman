@@ -29,7 +29,7 @@ namespace Bomberman
                 temporaryLayout[index] = 1;
             }
 
-            // Weak Walls
+            // Weak Walls (30 % chance of creating a weak wall at each possible location)
             for (int index = 0; index < 165; index++)
                 if ((temporaryLayout[index] != 1) && !BlockStates.IsIntersection(VectorMath.CalculateBoardVector(index), temporaryLayout) && (new Random().Next(0, 3) == 1))
                     newLayout[index] = 2;

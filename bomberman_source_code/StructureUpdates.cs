@@ -19,42 +19,28 @@ namespace Bomberman
         /// </summary>
         public static void UpdateTextures()
         {
-            if ((Game.boardLayout[Treasure.treasurePosition] == 0) && !Treasure.treasureFound)
+            if ((Game.boardLayout[Game.treasure.position] == 0) && !Game.treasure.itemFound)
             {
                 // Load the treasure texture
 
-                Treasure.treasureLoadCheck = true;
-                Game.gameBoard[Treasure.treasurePosition].ChangeType(BlockType.Treasure);
+                Game.gameBoard[Game.treasure.position].ChangeType(BlockType.Treasure);
+                Game.boardLayout[Game.treasure.position] = 5;
             }
 
-            if ((Game.boardLayout[ExitPortal.exitPortalPosition] == 0) && !ExitPortal.exitPortalFound)
+            if ((Game.boardLayout[Game.exitPortal.position] == 0) && !Game.exitPortal.itemFound)
             {
                 // Load the exit portal texture
 
-                ExitPortal.exitPortalLoadCheck = true;
-                Game.gameBoard[ExitPortal.exitPortalPosition].ChangeType(BlockType.ExitPortal);
-            }
-        }
-
-        /// <summary>
-        /// Add the loaded treasure or exit portal to the boardLayout
-        /// </summary>
-        public static void UpdateBoardLayout()
-        {
-            if (Treasure.treasureLoadCheck)
-            {
-                // Add the loaded treasure to the board
-
-                Game.boardLayout[Treasure.treasurePosition] = 5;
-                Treasure.treasureLoadCheck = false;
+                Game.gameBoard[Game.exitPortal.position].ChangeType(BlockType.ExitPortal);
+                Game.boardLayout[Game.exitPortal.position] = 6;
             }
 
-            if (ExitPortal.exitPortalLoadCheck)
+            if ((Game.boardLayout[Game.wheelchair.position] == 0) && !Game.wheelchair.itemFound && Game.wheelchair.itemGenerated)
             {
-                // Add the loaded exit portal to the board
+                // Load the wheelchair texture
 
-                Game.boardLayout[ExitPortal.exitPortalPosition] = 6;
-                ExitPortal.exitPortalLoadCheck = false;
+                Game.gameBoard[Game.wheelchair.position].ChangeType(BlockType.Wheelchair);
+                Game.boardLayout[Game.wheelchair.position] = 7;
             }
         }
     }

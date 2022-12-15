@@ -29,6 +29,7 @@ namespace Bomberman
                 case BlockType.Smoke: return Game.smokeTexture;
                 case BlockType.Treasure: return Game.textureTreasure;
                 case BlockType.ExitPortal: return Game.textureExitPortal;
+                case BlockType.Wheelchair: return Game.textureWheelchair;
                 default: return null;
             }
         }
@@ -40,7 +41,7 @@ namespace Bomberman
         /// <returns>BlockType matching the given ID</returns>
         public static BlockType ConvertToBlockType(int number)
         {
-            BlockType[] blockTypes = { BlockType.Air, BlockType.Wall, BlockType.WeakWall, BlockType.Bomb, BlockType.Smoke, BlockType.Treasure, BlockType.ExitPortal };
+            BlockType[] blockTypes = { BlockType.Air, BlockType.Wall, BlockType.WeakWall, BlockType.Bomb, BlockType.Smoke, BlockType.Treasure, BlockType.ExitPortal, BlockType.Wheelchair };
             return blockTypes[number];
         }
 
@@ -76,6 +77,7 @@ namespace Bomberman
         Smoke,
         Treasure,
         ExitPortal,
+        Wheelchair
     }
     #endregion
 }

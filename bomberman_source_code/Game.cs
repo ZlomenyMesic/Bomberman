@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
+using System.Linq;
 using System.Net.Mime;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -27,6 +28,7 @@ namespace Bomberman
          * 4 = smoke
          * 5 = loaded treasure
          * 6 = loaded exit portal
+         * 7 = loaded wheelchair
          */
 
         public static int[] boardLayout = new int[165];
@@ -38,6 +40,7 @@ namespace Bomberman
         public static Texture2D smokeTexture;
         public static Texture2D textureTreasure;
         public static Texture2D textureExitPortal;
+        public static Texture2D textureWheelchair;
 
         public static Texture2D floaterTexture;
         public static Texture2D ericTexture;
@@ -51,6 +54,10 @@ namespace Bomberman
         public static GameObject eric;
         public static GameObject floater1;
         public static GameObject floater2;
+
+        public static Item treasure;
+        public static Item exitPortal;
+        public static Item wheelchair;
 
         public static SoundEffect bombExplosion;
         public static SoundEffect ericWalking;
@@ -93,6 +100,7 @@ namespace Bomberman
             textureWeakWall = Content.Load<Texture2D>("WeakWall");
             textureTreasure = Content.Load<Texture2D>("Treasure");
             textureExitPortal = Content.Load<Texture2D>("Exit");
+            textureWheelchair = Content.Load<Texture2D>("Wheelchair");
 
             floaterTexture = Content.Load<Texture2D>("Floater");
             ericTexture = Content.Load<Texture2D>("Eric");
@@ -153,13 +161,13 @@ namespace Bomberman
             Bomb.CheckForDeath(ref floater1);
             Bomb.CheckForDeath(ref floater2);
 
-            // Structure updates (tresure and exit portal)
+            // Item updates
 
-            Treasure.CheckForPlayerCollision();
-            ExitPortal.CheckForPlayerCollision();
+            treasure.CheckForPlayerCollision();
+            exitPortal.CheckForPlayerCollision();
+            wheelchair.CheckForPlayerCollision();
 
             StructureUpdates.UpdateTextures();
-            StructureUpdates.UpdateBoardLayout();
 
             // SFX updates
 
@@ -208,8 +216,16 @@ namespace Bomberman
             // Load some important stuff
 
             LevelManager.LoadNewStartPositions();
-            Treasure.GenerateTreasure();
-            ExitPortal.GenerateExitPortal();
+
+            treasure = new(5);
+            exitPortal = new(6);
+            wheelchair = new(7);
+
+            treasure.GenerateItem();
+            exitPortal.GenerateItem();
+            if (new Random().Next(0, 3) == 1)
+                wheelchair.GenerateItem();
+
             BlockUtilities.UpdateAllTextures();
         }
 
@@ -228,10 +244,15 @@ namespace Bomberman
 
                 Bomb.ResetCountdowns();
 
-                // Prevent loading the treasure and the exit portal
+                // Prevent loading the treasure, exit portal and wheelchair
 
-                Treasure.treasureFound = true;
-                ExitPortal.exitPortalFound = true;
+                treasure.itemFound = true;
+                exitPortal.itemFound = true;
+                wheelchair.itemFound = true;
+
+                treasure.itemGenerated = false;
+                exitPortal.itemGenerated = false;
+                wheelchair.itemGenerated = false;
 
                 // Update the board and the textures
 
@@ -242,10 +263,12 @@ namespace Bomberman
 
                 LevelManager.LoadNewStartPositions();
 
-                // Generate a new treasure and a new exit portal
+                // Generate a new treasure, exit portal and wheelchair
 
-                Treasure.GenerateTreasure();
-                ExitPortal.GenerateExitPortal();
+                treasure.GenerateItem();
+                exitPortal.GenerateItem();
+                if (new Random().Next(0, 3) == 1)
+                    wheelchair.GenerateItem();
             }
         }
     }

@@ -72,7 +72,7 @@ namespace Bomberman
         public static bool CanBeWalkedThrough(Vector2 vector)
         {
             int num = Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)];
-            return (num == 0) || (num == 3) || (num == 4) || (num == 5) || (num == 6);
+            return (num == 0) || (num == 3) || (num == 4) || (num == 5) || (num == 6) || (num == 7);
         }
 
         /// <summary>
