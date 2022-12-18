@@ -18,7 +18,6 @@ namespace Bomberman
     {
         public static int level = 1;
         public static string levelText = "CURRENT STAGE: 1";
-        public static bool preventMultipleRestarts = true;
 
         /// <summary>
         /// Actions after a game object died.
@@ -30,7 +29,7 @@ namespace Bomberman
             Score.Set(playerDied ? 0 : Score.score + (new Random().Next(1, 20)) * 10);
 
             if (playerDied)
-                Game.Restart(!playerDied);
+                Game.Restart(newLevel: false);
         }
 
         /// <summary>

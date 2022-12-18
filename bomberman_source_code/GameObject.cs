@@ -47,9 +47,9 @@ namespace Bomberman
         /// </summary>
         public void Kill()
         {
-            LevelManager.preventMultipleRestarts = true;
             if (!isPlayer) 
                 this.MoveTo(new Vector2(9999999, 9999999));
+
             LevelManager.Death(isPlayer);
         }
     }

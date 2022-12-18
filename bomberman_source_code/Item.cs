@@ -13,7 +13,7 @@ using System.Security.Principal;
 
 namespace Bomberman
 {
-    #region Treasure
+    #region Hidden Items
     public class Item
     {
         public int position = 0;
@@ -71,11 +71,12 @@ namespace Bomberman
             }
         }
 
+        /// <summary>
+        /// Check if the player is touching the item, if yes, call Item.Collected()
+        /// </summary>
         public void CheckForPlayerCollision()
         {
             Vector2 ericCoordinates = VectorMath.DivideVector(new Vector2(Game.eric.position.X + 25, Game.eric.position.Y + 25));
-
-            // If the player is standing at the same block as the wheelchair, call Wheelchair.Collected()
 
             for (int index = 0; index < 165; index++)
                 if ((Game.boardLayout[index] == boardID) && (index == VectorMath.CalculateBoardRelativePosition(ericCoordinates)))

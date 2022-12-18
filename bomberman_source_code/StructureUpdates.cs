@@ -43,6 +43,16 @@ namespace Bomberman
                 Game.boardLayout[Game.wheelchair.position] = 7;
             }
         }
+
+        /// <summary>
+        /// Check for collisions between the player and game items
+        /// </summary>
+        public static void CheckForCollision()
+        {
+            Game.treasure.CheckForPlayerCollision();
+            Game.exitPortal.CheckForPlayerCollision();
+            Game.wheelchair.CheckForPlayerCollision();
+        }
     }
     #endregion
 }

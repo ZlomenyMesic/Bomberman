@@ -19,7 +19,7 @@ namespace Bomberman
         {
             if (isPlaying <= 0)
             {
-                isPlaying = 26;
+                isPlaying = (int)(Game.framesPerSecond / 3.85);
                 Game.ericWalking.Play();
             }
         }

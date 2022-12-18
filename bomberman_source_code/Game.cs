@@ -63,7 +63,10 @@ namespace Bomberman
         public static SoundEffect ericWalking;
         public static SoundEffect upgradeSound;
 
-        public static int FramesPerSecond = 100;
+        public const int framesPerSecond = 120;
+
+        public const int additionalFloaterSpeed = 2;
+        public static int floaterSpeedClock = 0;
 
         public Game()
         {
@@ -118,13 +121,13 @@ namespace Bomberman
         }
 
         /// <summary>
-        /// Update the game at 100 FPS
+        /// Update the game at 120 FPS
         /// </summary>
         /// <param name="gameTime">Time since the last update</param>
         protected override void Update(GameTime gameTime)
         {
             IsFixedTimeStep = true;
-            TargetElapsedTime = TimeSpan.FromSeconds(1d / FramesPerSecond);
+            TargetElapsedTime = TimeSpan.FromSeconds(1d / framesPerSecond);
 
             // Keyboard updates
 
@@ -141,32 +144,15 @@ namespace Bomberman
 
             // Floater updates
 
-            MoveGameObject.Move(ref floater1, floater1.direction);
-            MoveGameObject.Move(ref floater2, floater2.direction);
-
-            FloaterMovement.RandomDirectionChange(ref floater1);
-            FloaterMovement.RandomDirectionChange(ref floater2);
-
-            FloaterCollision.CheckForCollision(floater1);
-            FloaterCollision.CheckForCollision(floater2);
-
-            FloaterMovement.RandomTurnAtIntersection(ref floater1);
-            FloaterMovement.RandomTurnAtIntersection(ref floater2);
+            FloaterMovement.Updates();
 
             // Bomb updates
 
-            Bomb.BombCountdown();
-
-            Bomb.CheckForDeath(ref eric);
-            Bomb.CheckForDeath(ref floater1);
-            Bomb.CheckForDeath(ref floater2);
+            Bomb.Updates();
 
             // Item updates
 
-            treasure.CheckForPlayerCollision();
-            exitPortal.CheckForPlayerCollision();
-            wheelchair.CheckForPlayerCollision();
-
+            StructureUpdates.CheckForCollision();
             StructureUpdates.UpdateTextures();
 
             // SFX updates
@@ -223,7 +209,7 @@ namespace Bomberman
 
             treasure.GenerateItem();
             exitPortal.GenerateItem();
-            if (new Random().Next(0, 3) == 1)
+            if ((new Random().Next(0, 3) == 1) && (LevelManager.level > 2))
                 wheelchair.GenerateItem();
 
             BlockUtilities.UpdateAllTextures();
@@ -235,41 +221,36 @@ namespace Bomberman
         /// <param name="newLevel">true if a new level should be loaded, false to go back to level 0</param>
         public static void Restart(bool newLevel)
         {
-            if (LevelManager.preventMultipleRestarts)
-            {
-                LevelManager.preventMultipleRestarts = false;
+            LevelManager.level = newLevel ? LevelManager.level : 1;
+            LevelManager.levelText = $"CURRENT STAGE: {LevelManager.level}";
 
-                LevelManager.level = newLevel ? LevelManager.level : 1;
-                LevelManager.levelText = $"CURRENT STAGE: {LevelManager.level}";
+            Bomb.ResetCountdowns();
 
-                Bomb.ResetCountdowns();
+            // Prevent loading the treasure, exit portal and wheelchair
 
-                // Prevent loading the treasure, exit portal and wheelchair
+            treasure.itemFound = true;
+            exitPortal.itemFound = true;
+            wheelchair.itemFound = true;
 
-                treasure.itemFound = true;
-                exitPortal.itemFound = true;
-                wheelchair.itemFound = true;
+            treasure.itemGenerated = false;
+            exitPortal.itemGenerated = false;
+            wheelchair.itemGenerated = false;
 
-                treasure.itemGenerated = false;
-                exitPortal.itemGenerated = false;
-                wheelchair.itemGenerated = false;
+            // Update the board and the textures
 
-                // Update the board and the textures
+            BlockUtilities.LoadBoardLayout();
+            BlockUtilities.UpdateAllTextures();
 
-                BlockUtilities.LoadBoardLayout();
-                BlockUtilities.UpdateAllTextures();
+            // Load the new starting positions for the player and the floaters
 
-                // Load the new starting positions for the player and the floaters
+            LevelManager.LoadNewStartPositions();
 
-                LevelManager.LoadNewStartPositions();
+            // Generate a new treasure, exit portal and wheelchair
 
-                // Generate a new treasure, exit portal and wheelchair
-
-                treasure.GenerateItem();
-                exitPortal.GenerateItem();
-                if (new Random().Next(0, 3) == 1)
-                    wheelchair.GenerateItem();
-            }
+            treasure.GenerateItem();
+            exitPortal.GenerateItem();
+            if ((new Random().Next(0, 3) == 1) && (LevelManager.level > 2))
+                wheelchair.GenerateItem();
         }
     }
     #endregion

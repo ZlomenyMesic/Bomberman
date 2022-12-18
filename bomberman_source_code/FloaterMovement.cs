@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharpDX.MediaFoundation;
 
 namespace Bomberman
 {
@@ -70,6 +71,34 @@ namespace Bomberman
             }
 
             preventMultipleTurns--;
+        }
+
+        /// <summary>
+        /// All floater updates: moving, changing directions, checking for collision
+        /// </summary>
+        public static void Updates()
+        {
+            if (Game.floaterSpeedClock == Game.additionalFloaterSpeed)
+            {
+                // Move the floaters faster than the player
+
+                MoveGameObject.Move(ref Game.floater1, Game.floater1.direction);
+                MoveGameObject.Move(ref Game.floater2, Game.floater2.direction);
+                Game.floaterSpeedClock = 0;
+            }
+            else Game.floaterSpeedClock++;
+
+            MoveGameObject.Move(ref Game.floater1, Game.floater1.direction);
+            MoveGameObject.Move(ref Game.floater2, Game.floater2.direction);
+
+            FloaterMovement.RandomDirectionChange(ref Game.floater1);
+            FloaterMovement.RandomDirectionChange(ref Game.floater2);
+
+            FloaterCollision.CheckForCollision(Game.floater1);
+            FloaterCollision.CheckForCollision(Game.floater2);
+
+            FloaterMovement.RandomTurnAtIntersection(ref Game.floater1);
+            FloaterMovement.RandomTurnAtIntersection(ref Game.floater2);
         }
     }
     #endregion

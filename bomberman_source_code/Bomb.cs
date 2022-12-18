@@ -12,6 +12,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
+using SharpDX.MediaFoundation;
 
 namespace Bomberman
 {
@@ -33,9 +34,9 @@ namespace Bomberman
             if (!BlockStates.IsOutOfRange(ericCoords) && BlockStates.IsFree(ericCoords, Game.boardLayout) && !BlockStates.IsBomb(ericCoords) && (bombCountdown == -1) 
                 && (!Game.boardLayout.Contains(3)) && (!Game.boardLayout.Contains(4)))
             {
-                // Set the bomb countdown to 200 and change the block to a bomb
+                // Start the bomb countdown and change the block to a bomb
 
-                bombCountdown = 200;
+                bombCountdown = Game.framesPerSecond * 2;
                 Game.boardLayout[VectorMath.CalculateBoardRelativePosition(ericCoords)] = 3;
                 Game.gameBoard[VectorMath.CalculateBoardRelativePosition(ericCoords)].ChangeType(BlockType.Bomb);
             }
@@ -136,13 +137,13 @@ namespace Bomberman
         {
             if (Game.boardLayout.Contains(4))
             {
-                // If a bomb has exploded, count down from 60 and then clear the smoke
+                // If a bomb has exploded, start the countdown and then clear the smoke
                 // bombCountdown is -1 when there isn't any bomb
 
                 if ((bombCountdown <= 0) && !preventBombPlacement)
                 {
                     preventBombPlacement = true;
-                    bombCountdown = 60;
+                    bombCountdown = (int)(Game.framesPerSecond / 1.67);
                 }
                 else bombCountdown--;
 
@@ -187,6 +188,18 @@ namespace Bomberman
         {
             bombCountdown = -1;
             preventBombPlacement = false;
+        }
+
+        /// <summary>
+        /// Update the bomb countdown and check if a bomb killed someone
+        /// </summary>
+        public static void Updates()
+        {
+            Bomb.BombCountdown();
+
+            Bomb.CheckForDeath(ref Game.eric);
+            Bomb.CheckForDeath(ref Game.floater1);
+            Bomb.CheckForDeath(ref Game.floater2);
         }
     }
     #endregion
