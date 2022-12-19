@@ -35,8 +35,8 @@ be lower than zero.
 ## Key binds
 
 W - move up  
-A - move left
-S - move down
-D - move right
-Escape - close the game
+A - move left  
+S - move down  
+D - move right  
+Escape - close the game  
 R - restart the game (not yet)
