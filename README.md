@@ -44,5 +44,6 @@ R - restart the game (not yet)
 ## Download
 
 You can install this game easily with my [installer](https://github.com/ZlomenyMesic/Bomberman/blob/main/BombermanSetup.msi).
+The game needs an installer because it consists of many .dll files, images and audio files.
 All textures and sound effects can be found [here](https://github.com/ZlomenyMesic/Bomberman/blob/main/files/content),
 and the source code can be found [here](https://github.com/ZlomenyMesic/Bomberman/blob/main/files/code)
