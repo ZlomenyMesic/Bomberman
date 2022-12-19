@@ -10,7 +10,7 @@ levels as possible and collect score. Each level is
 a randomly generated map. Every map is a grid consisting of 
 strong and weak walls. In every level, there are two
 floating balloons (floaters). These are your enemies.
-They are a bit faster than you, and can kill you.
+They are 33% faster than you, and can kill you.
 You can also place bombs (only one at a time),
 which explode after shortly after being placed. The explosion size
 is 5 x 5 blocks. The bomb can kill you, but you can also use
