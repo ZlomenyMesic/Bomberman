@@ -1,7 +1,7 @@
 # Bomberman
 
 A simple 2d game, remake of *Eric and the floaters*.
-Everything was made in C#, using the Monogame framework.
+Everything was made in C# .NET Framework, using Monogame.
 
 ## Gameplay
 
@@ -40,3 +40,7 @@ S - move down
 D - move right  
 Esc - close the game  
 R - restart the game (not yet)
+
+## Download
+
+You can install this game easily with my [installer]()
