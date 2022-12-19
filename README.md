@@ -6,8 +6,8 @@ Everything was made in C#, using the Monogame framework.
 ## Gameplay
 
 You are the Eric. Your goal is to get through as many
-levels as possible and get a high score. Each level is
-randomly generated. Every map is a grid consisting of 
+levels as possible and collect score. Each level is
+a randomly generated map. Every map is a grid consisting of 
 strong and weak walls. In every level, there are two
 floating balloons (floaters). These are your enemies.
 They are a bit faster than you, and can kill you.
@@ -38,5 +38,5 @@ W - move up
 A - move left  
 S - move down  
 D - move right  
-Escape - close the game  
+Esc - close the game  
 R - restart the game (not yet)
