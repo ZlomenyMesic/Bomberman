@@ -34,7 +34,7 @@ be lower than zero.
 
 ## Key binds
 
-W - move up\n
+W - move up  
 A - move left
 S - move down
 D - move right
