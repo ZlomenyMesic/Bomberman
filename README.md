@@ -34,11 +34,9 @@ be lower than zero.
 
 ## Key binds
 
-W - move up  
-A - move left  
-S - move down  
-D - move right  
-Esc - close the game  
+WASD - move (up, left, down, right)  
+B - place a bomb  
+Esc - quit the game  
 R - restart the game (not yet)
 
 ## Download
