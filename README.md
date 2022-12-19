@@ -1,5 +1,5 @@
-## Bomberman
+# Bomberman
 
-# About
+## About
 
-A remake of the game Eric and the floaters.
+A simple 2d game, remake of *Eric and the floaters*.
