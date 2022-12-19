@@ -26,7 +26,7 @@ In every map, there is a treasure chest
 and an exit portal generated at the start of the game.
 Collecting the treasure will earn you a random score between
 160 and 1260. Entering the exit portal will teleport you to
-another level. After reaching level 3, there is a 1 in 3 chance
+the next level. After reaching level 3, there is a 1 in 3 chance
 of generating a random upgrade (or downgrade). So far I have added
 just one - wheelchair. Collecting a wheelchair will take you a
 random amount of score between 160 and 1260. Your score cannot
