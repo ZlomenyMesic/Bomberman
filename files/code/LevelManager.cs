@@ -45,7 +45,12 @@ namespace Bomberman
                     possibleSpawnPoints.Add(index);
 
             int ericPosition = possibleSpawnPoints[new Random().Next(0, possibleSpawnPoints.Count - 1)];
-            possibleSpawnPoints.Remove(ericPosition);
+
+            // Prevent spawning the floaters too close to the player
+
+            List<int> tooClose = new List<int> { ericPosition, ericPosition + 2, ericPosition + 4, ericPosition - 2, ericPosition - 4, ericPosition + 30, ericPosition + 60, ericPosition - 30, ericPosition - 60, ericPosition + 32, ericPosition + 28, ericPosition - 32, ericPosition - 28};
+            possibleSpawnPoints = possibleSpawnPoints.Except(tooClose).ToList();
+
             int floaterPosition1 = possibleSpawnPoints[new Random().Next(0, possibleSpawnPoints.Count - 1)];
             possibleSpawnPoints.Remove(floaterPosition1);
             int floaterPosition2 = possibleSpawnPoints[new Random().Next(0, possibleSpawnPoints.Count - 1)];

@@ -30,6 +30,7 @@ namespace Bomberman
             rectangle = new Rectangle((int)position.X, (int)position.Y, 50, 50);
             texture = player ? Game.ericTexture : Game.floaterTexture;
             isPlayer = player;
+            direction = MoveGameObject.ChooseRandomDirection();
         }
 
         /// <summary>

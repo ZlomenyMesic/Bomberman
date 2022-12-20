@@ -15,6 +15,7 @@ namespace Bomberman
     internal class FloaterMovement
     {
         private static int preventMultipleTurns = 0;
+        public static int preventTurningAway = 0;
 
         /// <summary>
         /// Choose a new direction of the floater.
@@ -26,7 +27,7 @@ namespace Bomberman
         {
             // List all directions, then remove the current one from the list, then choose a random new one
 
-            Direction[] directions = { Direction.Up, Direction.Down, Direction.Left, Direction.Right};
+            Direction[] directions = { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
             directions = directions.Where(direction => direction != currentDirection).ToArray();
             Direction newDirection = directions[new Random().Next(0, 3)];
 
@@ -54,7 +55,7 @@ namespace Bomberman
         /// <param name="floater">Game object reference</param>
         public static void RandomDirectionChange(ref GameObject floater)
         {
-            if (new Random().Next(0, 500) == 1)
+            if ((preventTurningAway < 0) && (new Random().Next(0, 500) == 1))
                 ChangeDirection(ref floater, floater.direction);
         }
 
@@ -64,13 +65,49 @@ namespace Bomberman
         /// <param name="floater">Game object reference</param>
         public static void RandomTurnAtIntersection(ref GameObject floater)
         {
-            if (BlockStates.IsIntersection(VectorMath.DivideVector(new Vector2(floater.position.X, floater.position.Y + 1)), Game.boardLayout) && (preventMultipleTurns < 0))
+            if (BlockStates.IsIntersection(VectorMath.DivideVector(new Vector2(floater.position.X, floater.position.Y + 1)), Game.boardLayout) 
+                && (preventMultipleTurns < 0) && (preventTurningAway < 0))
             {
                 TurnSideways(ref floater, floater.direction);
                 preventMultipleTurns = 200;
             }
 
-            preventMultipleTurns--;
+            if (preventMultipleTurns > -1)
+                preventTurningAway--;
+            if (preventTurningAway > -1)
+                preventTurningAway--;
+
+        }
+
+        /// <summary>
+        /// When a floater is at an intersection, check if the player is in any of the 4 directions, if yes, turn the floater
+        /// </summary>
+        /// <param name="floater">Game object reference</param>
+        public static void ChasePlayer(ref GameObject floater)
+        {
+            // Vertical checking
+
+            if (BlockStates.IsIntersection(VectorMath.DivideVector(new Vector2(floater.position.X + 1, floater.position.Y + 1)), Game.boardLayout) 
+                && ((int)(floater.position.Y / 50) == (int)((Game.eric.position.Y - 2) / 50)) && (preventTurningAway < 0))
+            {
+                if (floater.position.X > Game.eric.position.X)
+                    floater.direction = Direction.Left;
+                else floater.direction = Direction.Right;
+
+                preventTurningAway = 100;
+            }
+
+            // Horizontal checking
+
+            if (BlockStates.IsIntersection(VectorMath.DivideVector(new Vector2(floater.position.X + 1, floater.position.Y + 1)), Game.boardLayout)
+                && ((int)(floater.position.X / 50) == (int)((Game.eric.position.X + 2) / 50)) && (preventTurningAway < 0))
+            {
+                if (floater.position.Y > Game.eric.position.Y)
+                    floater.direction = Direction.Up;
+                else floater.direction = Direction.Down;
+
+                preventTurningAway = 100;
+            }
         }
 
         /// <summary>
@@ -80,7 +117,7 @@ namespace Bomberman
         {
             if (Game.floaterSpeedClock == Game.additionalFloaterSpeed)
             {
-                // Move the floaters faster than the player
+                // Move the floaters 33% faster than the player
 
                 MoveGameObject.Move(ref Game.floater1, Game.floater1.direction);
                 MoveGameObject.Move(ref Game.floater2, Game.floater2.direction);
@@ -96,6 +133,9 @@ namespace Bomberman
 
             FloaterCollision.CheckForCollision(Game.floater1);
             FloaterCollision.CheckForCollision(Game.floater2);
+
+            FloaterMovement.ChasePlayer(ref Game.floater1);
+            FloaterMovement.ChasePlayer(ref Game.floater2);
 
             FloaterMovement.RandomTurnAtIntersection(ref Game.floater1);
             FloaterMovement.RandomTurnAtIntersection(ref Game.floater2);

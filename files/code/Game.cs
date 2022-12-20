@@ -209,8 +209,6 @@ namespace Bomberman
 
             treasure.GenerateItem();
             exitPortal.GenerateItem();
-            if ((new Random().Next(0, 3) == 1) && (LevelManager.level > 2))
-                wheelchair.GenerateItem();
 
             BlockUtilities.UpdateAllTextures();
         }

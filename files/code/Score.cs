@@ -52,16 +52,7 @@ namespace Bomberman
 
             // Calculate the position
 
-            switch (scoreLength)
-            {
-                case 1: return new Vector2(330, 5);
-                case 2: return new Vector2(325, 5);
-                case 3: return new Vector2(320, 5);
-                case 4: return new Vector2(315, 5);
-                case 5: return new Vector2(310, 5);
-                case 6: return new Vector2(305, 5);
-                default: return new Vector2(0, 0);
-            }
+            return new Vector2(335 - (scoreLength * 5), 5);
         }
     }
     #endregion

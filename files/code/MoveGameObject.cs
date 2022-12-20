@@ -58,11 +58,14 @@ namespace Bomberman
                 FloaterMovement.ChangeDirection(ref gameObject, direction);
             }
 
-            // If the floater hits a bomb, change it's direction to the opposite
+            // If the floater hits a bomb, turn it in the opposite direction
 
-            if (!BlockStates.IsOutOfRange(newCoordsTop) && BlockStates.IsBomb(newCoordsTop)
-                || !BlockStates.IsOutOfRange(newCoordsBottom) && BlockStates.IsBomb(newCoordsBottom) && !gameObject.isPlayer)
+            if ((!BlockStates.IsOutOfRange(newCoordsTop) && BlockStates.IsBomb(newCoordsTop) && (Game.boardLayout[VectorMath.CalculateBoardRelativePosition(newCoordsTop)] == 4))
+                || (!BlockStates.IsOutOfRange(newCoordsBottom) && BlockStates.IsBomb(newCoordsBottom) && (Game.boardLayout[VectorMath.CalculateBoardRelativePosition(newCoordsBottom)] == 4)) && !gameObject.isPlayer)
+            {
                 gameObject.direction = oppositeDirection[gameObject.direction];
+                FloaterMovement.preventTurningAway = 150;
+            }
 
             // Walking sound effect
 
@@ -94,6 +97,16 @@ namespace Bomberman
                 case Direction.Left: move_X = -1; move_Y = 0; addX1 = 50; addY1 = 2; addX2 = 50; addY2 = 48; break;
                 case Direction.Right: move_X = 1; move_Y = 0; addX1 = 0; addY1 = 2; addX2 = 0; addY2 = 48; break;
             }
+        }
+
+        /// <summary>
+        /// Choose a random starting direction for the floaters
+        /// </summary>
+        /// <returns>The new direction</returns>
+        public static Direction ChooseRandomDirection()
+        {
+            Direction[] directions = { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
+            return directions[new Random().Next(0, 4)];
         }
     }
 
