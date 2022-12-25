@@ -113,32 +113,22 @@ namespace Bomberman
         /// <summary>
         /// All floater updates: moving, changing directions, checking for collision
         /// </summary>
-        public static void Updates()
+        public static void Updates(ref GameObject floater)
         {
+            // Move the floaters 33% faster than the player
+
             if (Game.floaterSpeedClock == Game.additionalFloaterSpeed)
             {
-                // Move the floaters 33% faster than the player
-
-                MoveGameObject.Move(ref Game.floater1, Game.floater1.direction);
-                MoveGameObject.Move(ref Game.floater2, Game.floater2.direction);
+                MoveGameObject.Move(ref floater, floater.direction);
                 Game.floaterSpeedClock = 0;
             }
             else Game.floaterSpeedClock++;
 
-            MoveGameObject.Move(ref Game.floater1, Game.floater1.direction);
-            MoveGameObject.Move(ref Game.floater2, Game.floater2.direction);
-
-            FloaterMovement.RandomDirectionChange(ref Game.floater1);
-            FloaterMovement.RandomDirectionChange(ref Game.floater2);
-
-            FloaterCollision.CheckForCollision(Game.floater1);
-            FloaterCollision.CheckForCollision(Game.floater2);
-
-            FloaterMovement.ChasePlayer(ref Game.floater1);
-            FloaterMovement.ChasePlayer(ref Game.floater2);
-
-            FloaterMovement.RandomTurnAtIntersection(ref Game.floater1);
-            FloaterMovement.RandomTurnAtIntersection(ref Game.floater2);
+            FloaterMovement.RandomDirectionChange(ref floater);
+            FloaterMovement.ChasePlayer(ref floater);
+            FloaterMovement.RandomTurnAtIntersection(ref floater);
+            FloaterCollision.CheckForCollision(floater);
+            MoveGameObject.Move(ref floater, floater.direction);
         }
     }
     #endregion

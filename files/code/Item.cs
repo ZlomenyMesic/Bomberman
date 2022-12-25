@@ -59,10 +59,18 @@ namespace Bomberman
                 Game.boardLayout[position] = 0;
                 Game.gameBoard[position].ChangeType(BlockType.Air);
 
+                // Treasure: add score
+
                 if (this.boardID == 5)
                     Score.Add((new Random().Next(16, 126)) * 10);
+
+                // Wheelchair: slow down the player by 50% for 3 seconds
+
                 else if (this.boardID == 7)
-                    Score.Add((new Random().Next(16, 126)) * -10);
+                    Game.slownessTimer = 360;
+
+                // Exit portal: load another stage
+
                 else if (this.boardID == 6)
                 {
                     LevelManager.levelText = $"CURRENT STAGE: {++LevelManager.level}";

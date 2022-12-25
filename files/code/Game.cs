@@ -68,6 +68,9 @@ namespace Bomberman
         public const int additionalFloaterSpeed = 2;
         public static int floaterSpeedClock = 0;
 
+        public static int slownessTimer = -1;
+
+
         public Game()
         {
             // Game window settings
@@ -129,14 +132,19 @@ namespace Bomberman
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromSeconds(1d / framesPerSecond);
 
-            // Keyboard updates
+            // Key binds
 
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
 
-            KeyBinds.KeyboardMovePlayer(keyboardState);
             KeyBinds.KeyboardPlaceBomb(keyboardState);
+
+            if (slownessTimer <= 0)
+                KeyBinds.KeyboardMovePlayer(keyboardState);
+            else if ((slownessTimer > 0) && (slownessTimer % 2) == 0)
+                KeyBinds.KeyboardMovePlayer(keyboardState);
+            if (slownessTimer > 0) slownessTimer--;
 
             // Eric position updates
 
@@ -144,7 +152,8 @@ namespace Bomberman
 
             // Floater updates
 
-            FloaterMovement.Updates();
+            FloaterMovement.Updates(ref floater1);
+            FloaterMovement.Updates(ref floater2);
 
             // Bomb updates
 
@@ -221,6 +230,8 @@ namespace Bomberman
         {
             LevelManager.level = newLevel ? LevelManager.level : 1;
             LevelManager.levelText = $"CURRENT STAGE: {LevelManager.level}";
+
+            slownessTimer = -1;
 
             Bomb.ResetCountdowns();
 

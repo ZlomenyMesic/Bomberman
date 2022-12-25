@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Principal;
 
 namespace Bomberman
 {
@@ -71,8 +72,7 @@ namespace Bomberman
         /// <returns>true if it can be walked through, otherwise false</returns>
         public static bool CanBeWalkedThrough(Vector2 vector)
         {
-            int num = Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)];
-            return (num == 0) || (num == 3) || (num == 4) || (num == 5) || (num == 6) || (num == 7);
+            return new int[]{ 0, 3, 4, 5, 6, 7}.Contains(Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)]);
         }
 
         /// <summary>
@@ -83,11 +83,22 @@ namespace Bomberman
         /// <returns>true if the block is an intersection, otherwise false</returns>
         public static bool IsIntersection(Vector2 vector, int[] board)
         {
-            return (IsOutOfRange(new Vector2(vector.X + 1, vector.Y)) || IsFree(new Vector2(vector.X + 1, vector.Y), board))
-                && (IsOutOfRange(new Vector2(vector.X - 1, vector.Y)) || IsFree(new Vector2(vector.X - 1, vector.Y), board))
-                && (IsOutOfRange(new Vector2(vector.X, vector.Y + 1)) || IsFree(new Vector2(vector.X, vector.Y + 1), board))
-                && (IsOutOfRange(new Vector2(vector.X, vector.Y - 1)) || IsFree(new Vector2(vector.X, vector.Y - 1), board))
-                && !IsOutOfRange(vector) && IsFree(vector, board);
+            bool check = true;
+            int addX; int addY;
+
+            for (int index = 0; index < 5; index++)
+            {
+                addX = 0; addY = 0;
+
+                if (index == 1) addX = 1;
+                else if (index == 2) addX = -1;
+                else if (index == 3) addY = 1;
+                else if (index == 4) addY = -1;
+
+                if (!IsOutOfRange(new Vector2(vector.X + addX, vector.Y + addY)) && !IsFree(new Vector2(vector.X + addX, vector.Y + addY), board))
+                    check = false;
+            }
+            return check;
         }
     }
     #endregion
