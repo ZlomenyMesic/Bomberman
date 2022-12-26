@@ -39,7 +39,7 @@ namespace Bomberman
             // List all weak walls
 
             for (int index = 0; index < 165; index++)
-                if ((Game.boardLayout[index] == 2) && (index != Game.treasure.position) && (index != Game.exitPortal.position) && (index != Game.wheelchair.position))
+                if ((Game.boardLayout[index] == 2) && (index != Game.treasure.position) && (index != Game.exitPortal.position) && (index != Game.wheelchair.position) && (index != Game.trap.position))
                     possibleBlocks.Add(index);
 
             // Choose a random one
@@ -50,44 +50,23 @@ namespace Bomberman
         /// <summary>
         /// Erase the item and do something depending on the item
         /// </summary>
-        public void Collected()
+        public virtual void Collected()
         {
-            if (!itemFound)
-            {
-                itemFound = true;
-                Game.upgradeSound.Play();
-                Game.boardLayout[position] = 0;
-                Game.gameBoard[position].ChangeType(BlockType.Air);
-
-                // Treasure: add score
-
-                if (this.boardID == 5)
-                    Score.Add((new Random().Next(16, 126)) * 10);
-
-                // Wheelchair: slow down the player by 50% for 3 seconds
-
-                else if (this.boardID == 7)
-                    Game.slownessTimer = 360;
-
-                // Exit portal: load another stage
-
-                else if (this.boardID == 6)
-                {
-                    LevelManager.levelText = $"CURRENT STAGE: {++LevelManager.level}";
-                    Game.Restart(newLevel: true);
-                }
-            }
+            itemFound = true;
+            Game.upgradeSound.Play();
+            Game.boardLayout[position] = 0;
+            Game.gameBoard[position].ChangeType(BlockType.Air);
         }
 
         /// <summary>
         /// Check if the player is touching the item, if yes, call Item.Collected()
         /// </summary>
-        public void CheckForPlayerCollision()
+        public virtual void CheckForPlayerCollision()
         {
             Vector2 ericCoordinates = VectorMath.DivideVector(new Vector2(Game.eric.position.X + 25, Game.eric.position.Y + 25));
 
             for (int index = 0; index < 165; index++)
-                if ((Game.boardLayout[index] == boardID) && (index == VectorMath.CalculateBoardRelativePosition(ericCoordinates)))
+                if ((Game.boardLayout[index] == boardID) && (index == VectorMath.CalculateBoardRelativePosition(ericCoordinates)) && !itemFound)
                     this.Collected();
         }
     }

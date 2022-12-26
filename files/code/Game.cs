@@ -29,6 +29,7 @@ namespace Bomberman
          * 5 = loaded treasure
          * 6 = loaded exit portal
          * 7 = loaded wheelchair
+         * 8 = loaded trap
          */
 
         public static int[] boardLayout = new int[165];
@@ -41,6 +42,7 @@ namespace Bomberman
         public static Texture2D textureTreasure;
         public static Texture2D textureExitPortal;
         public static Texture2D textureWheelchair;
+        public static Texture2D textureTrap;
 
         public static Texture2D floaterTexture;
         public static Texture2D ericTexture;
@@ -55,9 +57,10 @@ namespace Bomberman
         public static GameObject floater1;
         public static GameObject floater2;
 
-        public static Item treasure;
-        public static Item exitPortal;
-        public static Item wheelchair;
+        public static Treasure treasure;
+        public static ExitPortal exitPortal;
+        public static Wheelchair wheelchair;
+        public static Trap trap;
 
         public static SoundEffect bombExplosion;
         public static SoundEffect ericWalking;
@@ -107,6 +110,7 @@ namespace Bomberman
             textureTreasure = Content.Load<Texture2D>("Treasure");
             textureExitPortal = Content.Load<Texture2D>("Exit");
             textureWheelchair = Content.Load<Texture2D>("Wheelchair");
+            textureTrap = Content.Load<Texture2D>("Trap");
 
             floaterTexture = Content.Load<Texture2D>("Floater");
             ericTexture = Content.Load<Texture2D>("Eric");
@@ -161,8 +165,8 @@ namespace Bomberman
 
             // Item updates
 
-            StructureUpdates.CheckForCollision();
-            StructureUpdates.UpdateTextures();
+            ItemUpdates.CheckForCollision();
+            ItemUpdates.UpdateTextures();
 
             // SFX updates
 
@@ -212,12 +216,16 @@ namespace Bomberman
 
             LevelManager.LoadNewStartPositions();
 
-            treasure = new(5);
-            exitPortal = new(6);
-            wheelchair = new(7);
+            treasure = new Treasure();
+            exitPortal = new ExitPortal();
+            wheelchair = new Wheelchair();
+            trap = new Trap();
 
             treasure.GenerateItem();
             exitPortal.GenerateItem();
+            //if (new Random().Next(0, 3) == 1)
+            trap.GenerateItem();
+            
 
             BlockUtilities.UpdateAllTextures();
         }
@@ -240,10 +248,12 @@ namespace Bomberman
             treasure.itemFound = true;
             exitPortal.itemFound = true;
             wheelchair.itemFound = true;
+            trap.itemFound = true;
 
             treasure.itemGenerated = false;
             exitPortal.itemGenerated = false;
             wheelchair.itemGenerated = false;
+            trap.itemGenerated = false;
 
             // Update the board and the textures
 
@@ -258,8 +268,10 @@ namespace Bomberman
 
             treasure.GenerateItem();
             exitPortal.GenerateItem();
-            if ((new Random().Next(0, 3) == 1) && (LevelManager.level > 2))
+            if ((new Random().Next(0, 3) == 1) && (LevelManager.level > 1))
                 wheelchair.GenerateItem();
+            if (new Random().Next(0, 3) == 1)
+                trap.GenerateItem();
         }
     }
     #endregion

@@ -72,7 +72,7 @@ namespace Bomberman
         /// <returns>true if it can be walked through, otherwise false</returns>
         public static bool CanBeWalkedThrough(Vector2 vector)
         {
-            return new int[]{ 0, 3, 4, 5, 6, 7}.Contains(Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)]);
+            return new int[]{ 0, 3, 4, 5, 6, 7, 8}.Contains(Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)]);
         }
 
         /// <summary>
