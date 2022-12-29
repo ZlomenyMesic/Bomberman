@@ -27,7 +27,7 @@ and an exit portal generated at the start of the game.
 Collecting the treasure will earn you a random score between
 160 and 1260. Entering the exit portal will teleport you to
 the next level. There is also a small chance that other items will generate,
-those are: Wheelchair - gives you slowness for 3 seconds and Trap - can kill you or a floater.
+those are: wheelchair (makes you 50% slower for 3 seconds) and trap (kills anyone who gets caught in it).
 
 ## Key binds
 
