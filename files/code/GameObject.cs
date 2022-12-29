@@ -48,10 +48,17 @@ namespace Bomberman
         /// </summary>
         public void Kill()
         {
-            if (!isPlayer) 
-                this.MoveTo(new Vector2(9999999, 9999999));
-
-            LevelManager.Death(isPlayer);
+            Score.Set(isPlayer ? 0 : Score.score + new Random().Next(1, 20) * 10);
+            if (isPlayer)
+            {
+                Game.playerDeath.Play();
+                Game.Restart(newLevel: false);
+            }
+            else
+            {
+                Game.floaterDeath.Play();
+                if (!isPlayer) this.MoveTo(new Vector2(9999999, 9999999));
+            }
         }
     }
     #endregion

@@ -43,11 +43,11 @@ namespace Bomberman
         }
 
         /// <summary>
-        /// Calculate a radius for the bomb explosion
+        /// Calculate the size of a bomb explosion
         /// </summary>
         /// <param name="pos">The block where the bomb is placed at</param>
         /// <returns>A list with the blocks that will explode</returns>
-        private static List<int> Radius(int pos)
+        private static List<int> Size(int pos, int radius)
         {
             List<int> destructableBlocks = new List<int>();
             Vector2 bombPos = VectorMath.CalculateBoardVector(pos);
@@ -55,7 +55,7 @@ namespace Bomberman
             // Go from the middle to the sides, break the cycle if it hits a wall
 
             // 2 blocks left
-            for (int index = (int)bombPos.X - 1; index > bombPos.X - 3; index--)
+            for (int index = (int)bombPos.X - 1; index > bombPos.X - radius - 1; index--)
             {
                 if (BlockStates.CanExplode(new Vector2(index, bombPos.Y)))
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(index, bombPos.Y)));
@@ -63,7 +63,7 @@ namespace Bomberman
             }
 
             // 2 blocks right
-            for (int index = (int)bombPos.X + 1; index < bombPos.X + 3; index++)
+            for (int index = (int)bombPos.X + 1; index < bombPos.X + radius + 1; index++)
             {
                 if (BlockStates.CanExplode(new Vector2(index, bombPos.Y)))
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(index, bombPos.Y)));
@@ -71,7 +71,7 @@ namespace Bomberman
             }
 
             // 2 blocks up
-            for (int index = (int)bombPos.Y - 1; index > bombPos.Y - 3; index--)
+            for (int index = (int)bombPos.Y - 1; index > bombPos.Y - radius - 1; index--)
             {
                 if (BlockStates.CanExplode(new Vector2(bombPos.X, index)))
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(bombPos.X, index)));
@@ -79,7 +79,7 @@ namespace Bomberman
             }
 
             // 2 blocks down
-            for (int index = (int)bombPos.Y + 1; index < bombPos.Y + 3; index++)
+            for (int index = (int)bombPos.Y + 1; index < bombPos.Y + radius + 1; index++)
             {
                 if (BlockStates.CanExplode(new Vector2(bombPos.X, index)))
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(bombPos.X, index)));
@@ -87,6 +87,7 @@ namespace Bomberman
             }
 
             destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(bombPos));
+
             return destructableBlocks;
         }
 
@@ -103,7 +104,7 @@ namespace Bomberman
             {
                 if (Game.boardLayout[index] == 3)
                 {
-                    foreach (int position in Radius(index))
+                    foreach (int position in Size(index, 2))
                     {
                         Game.gameBoard[position].ChangeType(BlockType.Smoke);
                         Game.boardLayout[position] = 4;
@@ -157,8 +158,7 @@ namespace Bomberman
             {
                 // If a bomb is placed, count down from 200 and then explode
 
-                if (bombCountdown != -1) 
-                    bombCountdown--;
+                if (bombCountdown != -1) bombCountdown--;
 
                 if (bombCountdown == 0)
                 {

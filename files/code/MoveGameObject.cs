@@ -14,7 +14,7 @@ namespace Bomberman
     #region Game Object Movement
     internal static class MoveGameObject
     {
-        public static Dictionary<Direction, Direction> oppositeDirection = new Dictionary<Direction, Direction> 
+        public static Dictionary<Direction, Direction> oppositeDirection = new Dictionary<Direction, Direction>
         {
             { Direction.Up, Direction.Down },
             { Direction.Down, Direction.Up },
@@ -60,8 +60,8 @@ namespace Bomberman
 
             // If the floater hits a bomb, turn it in the opposite direction
 
-            if ((!BlockStates.IsOutOfRange(newCoordsTop) && BlockStates.IsBomb(newCoordsTop) && (Game.boardLayout[VectorMath.CalculateBoardRelativePosition(newCoordsTop)] == 4))
-                || (!BlockStates.IsOutOfRange(newCoordsBottom) && BlockStates.IsBomb(newCoordsBottom) && (Game.boardLayout[VectorMath.CalculateBoardRelativePosition(newCoordsBottom)] == 4)) && !gameObject.isPlayer)
+            if (!BlockStates.IsOutOfRange(newCoordsTop) && (BlockStates.IsBomb(newCoordsTop) || Game.boardLayout[VectorMath.CalculateBoardRelativePosition(newCoordsTop)] == 4)
+                || !BlockStates.IsOutOfRange(newCoordsBottom) && (BlockStates.IsBomb(newCoordsBottom) || Game.boardLayout[VectorMath.CalculateBoardRelativePosition(newCoordsBottom)] == 4) && !gameObject.isPlayer)
             {
                 gameObject.direction = oppositeDirection[gameObject.direction];
                 FloaterMovement.preventTurningAway = 150;

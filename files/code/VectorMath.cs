@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Bomberman
 {
     #region Vector Math
-    internal class VectorMath : Microsoft.Xna.Framework.Game
+    internal class VectorMath
     {
         /// <summary>
         /// Convert XY window relative coordinates to a single number

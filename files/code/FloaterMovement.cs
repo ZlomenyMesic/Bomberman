@@ -35,21 +35,6 @@ namespace Bomberman
         }
 
         /// <summary>
-        /// Choose a new direction for the floater.
-        /// Only turn sideways (no turning in the opposite direction)
-        /// </summary>
-        /// <param name="floater">Game object reference</param>
-        /// <param name="currentDirection">The current direction of the floater</param>
-        public static void TurnSideways(ref GameObject floater, Direction currentDirection)
-        {
-            Direction[] directions = { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
-            directions = directions.Where(direction => (direction != currentDirection) && (direction != MoveGameObject.oppositeDirection[direction])).ToArray();
-            Direction newDirection = directions[new Random().Next(0, 2)];
-
-            floater.direction = newDirection;
-        }
-
-        /// <summary>
         /// 0.1% chance that the floater will change it's direction
         /// </summary>
         /// <param name="floater">Game object reference</param>
@@ -68,7 +53,7 @@ namespace Bomberman
             if (BlockStates.IsIntersection(VectorMath.DivideVector(new Vector2(floater.position.X, floater.position.Y + 1)), Game.boardLayout) 
                 && (preventMultipleTurns < 0) && (preventTurningAway < 0))
             {
-                TurnSideways(ref floater, floater.direction);
+                ChangeDirection(ref floater, floater.direction);
                 preventMultipleTurns = 200;
             }
 

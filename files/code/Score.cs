@@ -46,12 +46,7 @@ namespace Bomberman
         /// <returns>XY window-relative coordinates</returns>
         public static Vector2 CalculateScoreBoardPosition()
         {
-            // Get the length of the score
-
             int scoreLength = score.ToString().Length;
-
-            // Calculate the position
-
             return new Vector2(335 - (scoreLength * 5), 5);
         }
     }

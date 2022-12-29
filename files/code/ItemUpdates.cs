@@ -15,40 +15,19 @@ namespace Bomberman
     internal static class ItemUpdates
     {
         /// <summary>
-        /// Update the treasure and exit portal textures
+        /// Update all item textures
         /// </summary>
         public static void UpdateTextures()
         {
-            if ((Game.boardLayout[Game.treasure.position] == 0) && !Game.treasure.itemFound)
+            Item[] items = new Item[] { Game.treasure, Game.exitPortal, Game.wheelchair, Game.trap };
+
+            foreach (Item item in items)
             {
-                // Load the treasure texture
-
-                Game.gameBoard[Game.treasure.position].ChangeType(BlockType.Treasure);
-                Game.boardLayout[Game.treasure.position] = 5;
-            }
-
-            if ((Game.boardLayout[Game.exitPortal.position] == 0) && !Game.exitPortal.itemFound)
-            {
-                // Load the exit portal texture
-
-                Game.gameBoard[Game.exitPortal.position].ChangeType(BlockType.ExitPortal);
-                Game.boardLayout[Game.exitPortal.position] = 6;
-            }
-
-            if ((Game.boardLayout[Game.wheelchair.position] == 0) && !Game.wheelchair.itemFound && Game.wheelchair.itemGenerated)
-            {
-                // Load the wheelchair texture
-
-                Game.gameBoard[Game.wheelchair.position].ChangeType(BlockType.Wheelchair);
-                Game.boardLayout[Game.wheelchair.position] = 7;
-            }
-
-            if ((Game.boardLayout[Game.trap.position] == 0) && !Game.trap.itemFound && Game.trap.itemGenerated)
-            {
-                // Load the trap texture
-
-                Game.gameBoard[Game.trap.position].ChangeType(BlockType.Trap);
-                Game.boardLayout[Game.trap.position] = 8;
+                if ((Game.boardLayout[item.position] == 0) && item.itemGenerated && !item.itemFound)
+                {
+                    Game.gameBoard[item.position].ChangeType(BlockUtilities.ConvertToBlockType(item.boardID));
+                    Game.boardLayout[item.position] = item.boardID;
+                }
             }
         }
 

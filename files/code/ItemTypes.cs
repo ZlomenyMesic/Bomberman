@@ -38,7 +38,7 @@ namespace Bomberman
         public override void Collected()
         {
             base.Collected();
-            LevelManager.levelText = $"CURRENT STAGE: {++LevelManager.level}";
+            LevelGeneration.levelText = $"CURRENT STAGE: {++LevelGeneration.level}";
             Game.Restart(newLevel: true);
         }
     }

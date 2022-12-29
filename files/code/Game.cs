@@ -65,6 +65,8 @@ namespace Bomberman
         public static SoundEffect bombExplosion;
         public static SoundEffect ericWalking;
         public static SoundEffect upgradeSound;
+        public static SoundEffect playerDeath;
+        public static SoundEffect floaterDeath;
 
         public const int framesPerSecond = 120;
 
@@ -123,6 +125,8 @@ namespace Bomberman
             bombExplosion = Content.Load<SoundEffect>("bombSound");
             ericWalking = Content.Load<SoundEffect>("walking");
             upgradeSound = Content.Load<SoundEffect>("treasureSound");
+            playerDeath = Content.Load<SoundEffect>("playerDeath");
+            floaterDeath = Content.Load<SoundEffect>("floaterDeath");
 
             mainFont = Content.Load<SpriteFont>("MainFont");
         }
@@ -141,6 +145,9 @@ namespace Bomberman
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            if (keyboardState.IsKeyDown(Keys.R))
+                Restart(false);
 
             KeyBinds.KeyboardPlaceBomb(keyboardState);
 
@@ -200,7 +207,7 @@ namespace Bomberman
             // Draw the scoreboard
 
             _spriteBatch.DrawString(mainFont, Score.scoreboard, Score.CalculateScoreBoardPosition(), Color.White);
-            _spriteBatch.DrawString(mainFont, LevelManager.levelText, new Vector2(5, 5), Color.White);
+            _spriteBatch.DrawString(mainFont, LevelGeneration.levelText, new Vector2(5, 5), Color.White);
 
             _spriteBatch.End();
 
@@ -214,7 +221,7 @@ namespace Bomberman
         {
             // Load some important stuff
 
-            LevelManager.LoadNewStartPositions();
+            LevelGeneration.LoadNewStartPositions();
 
             treasure = new Treasure();
             exitPortal = new ExitPortal();
@@ -223,9 +230,10 @@ namespace Bomberman
 
             treasure.GenerateItem();
             exitPortal.GenerateItem();
-            //if (new Random().Next(0, 3) == 1)
-            trap.GenerateItem();
-            
+            if (new Random().Next(0, 3) == 1)
+                wheelchair.GenerateItem();
+            if (new Random().Next(0, 4) == 1)
+                trap.GenerateItem();
 
             BlockUtilities.UpdateAllTextures();
         }
@@ -236,8 +244,8 @@ namespace Bomberman
         /// <param name="newLevel">true if a new level should be loaded, false to go back to level 0</param>
         public static void Restart(bool newLevel)
         {
-            LevelManager.level = newLevel ? LevelManager.level : 1;
-            LevelManager.levelText = $"CURRENT STAGE: {LevelManager.level}";
+            LevelGeneration.level = newLevel ? LevelGeneration.level : 1;
+            LevelGeneration.levelText = $"CURRENT STAGE: {LevelGeneration.level}";
 
             slownessTimer = -1;
 
@@ -262,13 +270,13 @@ namespace Bomberman
 
             // Load the new starting positions for the player and the floaters
 
-            LevelManager.LoadNewStartPositions();
+            LevelGeneration.LoadNewStartPositions();
 
             // Generate a new treasure, exit portal and wheelchair
 
             treasure.GenerateItem();
             exitPortal.GenerateItem();
-            if ((new Random().Next(0, 3) == 1) && (LevelManager.level > 1))
+            if ((new Random().Next(0, 3) == 1) && (LevelGeneration.level > 1))
                 wheelchair.GenerateItem();
             if (new Random().Next(0, 3) == 1)
                 trap.GenerateItem();

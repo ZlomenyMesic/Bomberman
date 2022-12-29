@@ -10,6 +10,9 @@ namespace Bomberman
     #region Level Generating
     internal class LevelGeneration
     {
+        public static int level = 1;
+        public static string levelText = "CURRENT STAGE: 1";
+
         /// <summary>
         /// Generate a new random board layout
         /// </summary>
@@ -53,6 +56,29 @@ namespace Bomberman
                     totalWeakWalls++;
 
             return (totalWeakWalls > 27) && (totalWeakWalls < 35);
+        }
+
+        /// <summary>
+        /// Move the player and the floaters to their new random starting positions
+        /// </summary>
+        /// <param name="newLevel">The new board</param>
+        public static void LoadNewStartPositions()
+        {
+            List<int> possibleSpawnPoints = new List<int>();
+
+            for (int index = 0; index < 165; index++)
+                if (BlockStates.IsIntersection(VectorMath.CalculateBoardVector(index), Game.boardLayout))
+                    possibleSpawnPoints.Add(index);
+
+            int ericPosition = possibleSpawnPoints[new Random().Next(0, possibleSpawnPoints.Count - 1)];
+
+            // Prevent spawning the floaters too close to the player
+
+            List<int> possibleFloaterSpawnPoints = possibleSpawnPoints.Except(new List<int> { ericPosition, ericPosition + 2, ericPosition + 4, ericPosition - 2, ericPosition - 4, ericPosition + 30, ericPosition + 60, ericPosition - 30, ericPosition - 60, ericPosition + 32, ericPosition + 28, ericPosition - 32, ericPosition - 28 }).ToList();
+
+            Game.eric = new GameObject(VectorMath.CalculateActualVector(ericPosition), true);
+            Game.floater1 = new GameObject(VectorMath.CalculateActualVector(possibleFloaterSpawnPoints[new Random().Next(0, possibleFloaterSpawnPoints.Count)]), false);
+            Game.floater2 = new GameObject(VectorMath.CalculateActualVector(possibleFloaterSpawnPoints[new Random().Next(0, possibleFloaterSpawnPoints.Count)]), false);
         }
     }
     #endregion

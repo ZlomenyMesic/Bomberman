@@ -36,13 +36,9 @@ namespace Bomberman
 
             List<int> possibleBlocks = new List<int>();
 
-            // List all weak walls
-
             for (int index = 0; index < 165; index++)
                 if ((Game.boardLayout[index] == 2) && (index != Game.treasure.position) && (index != Game.exitPortal.position) && (index != Game.wheelchair.position) && (index != Game.trap.position))
                     possibleBlocks.Add(index);
-
-            // Choose a random one
 
             position = possibleBlocks[new Random().Next(0, possibleBlocks.Count - 1)];
         }
